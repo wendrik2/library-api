@@ -3,6 +3,7 @@ package com.library.library_api.controller;
 import com.library.library_api.book.Book;
 import com.library.library_api.repository.BookRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +24,12 @@ public class BookController {
     @PostMapping
     public Book createBook(@RequestBody Book book){
         return bookRepository.save(book);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Book> deleteBook(@PathVariable Long id){
+        bookRepository.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 }
 
