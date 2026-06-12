@@ -11,11 +11,3 @@ public class LibraryApiApplication {
 	}
 
 }
-/*
-* Анотації на методах:
-
-@GetMapping — обробляє GET запит
-@PostMapping — обробляє POST запит
-@PathVariable — бере значення з URL, наприклад /api/books/1
-@RequestBody — бере JSON з тіла запиту
-* */

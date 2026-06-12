@@ -27,9 +27,23 @@ public class BookController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Book> deleteBook(@PathVariable Long id){
+    public ResponseEntity<Void> deleteBook(@PathVariable Long id){
         bookRepository.deleteById(id);
         return ResponseEntity.noContent().build();
+    }
+    @GetMapping("/{id}")
+    public Book getById(@PathVariable Long id){
+        return bookRepository.findById(id).orElseThrow();
+    }
+    @PutMapping("{id}")
+    public Book updateBook(@PathVariable Long id, @RequestBody Book book){
+        return bookRepository.findById(id).map(existing -> {
+            existing.setTitle(book.getTitle());
+            existing.setAuthor(book.getAuthor());
+            existing.setIsbn(book.getIsbn());
+            existing.setPublishedYear(book.getPublishedYear());
+            return bookRepository.save(existing);
+        }).orElseThrow();
     }
 }
 
