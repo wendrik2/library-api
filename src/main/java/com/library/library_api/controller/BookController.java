@@ -2,6 +2,7 @@ package com.library.library_api.controller;
 
 import com.library.library_api.book.Book;
 import com.library.library_api.repository.BookRepository;
+import com.library.library_api.service.BookService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -14,36 +15,30 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BookController {
 
-    private final BookRepository bookRepository;
+    private final BookService bookService;
 
     @GetMapping
     public List<Book> getAllBooks(){
-        return bookRepository.findAll();
+        return bookService.getAllBooks();
     }
 
     @PostMapping
     public Book createBook(@RequestBody Book book){
-        return bookRepository.save(book);
+        return bookService.createBook(book);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteBook(@PathVariable Long id){
-        bookRepository.deleteById(id);
-        return ResponseEntity.noContent().build();
+        return bookService.deleteBook(id);
     }
     @GetMapping("/{id}")
     public Book getById(@PathVariable Long id){
-        return bookRepository.findById(id).orElseThrow();
+        return bookService.getById(id);
     }
+
     @PutMapping("{id}")
     public Book updateBook(@PathVariable Long id, @RequestBody Book book){
-        return bookRepository.findById(id).map(existing -> {
-            existing.setTitle(book.getTitle());
-            existing.setAuthor(book.getAuthor());
-            existing.setIsbn(book.getIsbn());
-            existing.setPublishedYear(book.getPublishedYear());
-            return bookRepository.save(existing);
-        }).orElseThrow();
+        return bookService.updateBook(id, book);
     }
 }
 
