@@ -1,6 +1,7 @@
 package com.library.library_api.service;
 
 import com.library.library_api.book.Book;
+import com.library.library_api.exception.BookNotFoundException;
 import com.library.library_api.repository.BookRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +25,7 @@ public class BookService {
     }
 
     public Book getById(Long id){
-        return bookRepository.findById(id).orElseThrow();
+        return bookRepository.findById(id).orElseThrow(() -> new BookNotFoundException(id));
     }
 
     public Book createBook(Book book){
@@ -38,7 +39,7 @@ public class BookService {
             existing.setIsbn(book.getIsbn());
             existing.setPublishedYear(book.getPublishedYear());
             return bookRepository.save(existing);
-        }).orElseThrow();
+        }).orElseThrow(() -> new BookNotFoundException(id));
     }
 
     public ResponseEntity<Void> deleteBook(Long id){
