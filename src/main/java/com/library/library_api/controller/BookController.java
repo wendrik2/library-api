@@ -3,6 +3,7 @@ package com.library.library_api.controller;
 import com.library.library_api.book.Book;
 import com.library.library_api.repository.BookRepository;
 import com.library.library_api.service.BookService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -22,8 +23,9 @@ public class BookController {
         return bookService.getAllBooks();
     }
 
+
     @PostMapping
-    public Book createBook(@RequestBody Book book){
+    public Book createBook(@Valid @RequestBody Book book){
         return bookService.createBook(book);
     }
 
@@ -36,8 +38,9 @@ public class BookController {
         return bookService.getById(id);
     }
 
-    @PutMapping("{id}")
-    public Book updateBook(@PathVariable Long id, @RequestBody Book book){
+
+    @PutMapping("/{id}")
+    public Book updateBook(@PathVariable Long id, @Valid @RequestBody Book book){
         return bookService.updateBook(id, book);
     }
 }
