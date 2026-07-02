@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -19,8 +21,8 @@ public class BookController {
     private final BookService bookService;
 
     @GetMapping
-    public List<Book> getAllBooks(){
-        return bookService.getAllBooks();
+    public Page<Book> getAllBooks(Pageable pageable) {
+        return bookService.getAllBooks(pageable);
     }
 
 

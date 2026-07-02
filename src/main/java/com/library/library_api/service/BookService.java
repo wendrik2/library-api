@@ -4,12 +4,16 @@ import com.library.library_api.book.Book;
 import com.library.library_api.exception.BookNotFoundException;
 import com.library.library_api.repository.BookRepository;
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import javax.sound.midi.VoiceStatus;
+
 import java.util.List;
 
 @Service
@@ -20,8 +24,8 @@ public class BookService {
     private final BookRepository bookRepository;
 
 
-    public List<Book> getAllBooks(){
-        return bookRepository.findAll();
+    public Page<Book> getAllBooks(Pageable pageable){
+        return bookRepository.findAll(pageable);
     }
 
     public Book getById(Long id){
